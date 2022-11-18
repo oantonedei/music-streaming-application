@@ -10,7 +10,6 @@
     padding: 0;
     margin: 0;
   }
-
 #errorMsg {
     color: red;
 }
@@ -28,6 +27,7 @@
     background-color: rgb(212, 222, 222);
     border: 2px solid rgb(243, 236, 236);
     height: 60px;
+    width: 100%;
 }
 
 .top{
@@ -48,6 +48,12 @@
   justify-content: end;
 }
 
+
+.topWel{
+    display: flex;
+    gap: 10px;
+    padding-top: 5px;
+}
 .sect{
     text-align: center;
     padding-top: 20px;
@@ -64,12 +70,6 @@ img{
 
 }
 
-
-.topWel{
-    display: flex;
-    gap: 1350px;
-    padding-top: 20px;
-}
 
 body{
     background-color: #66d9dd;

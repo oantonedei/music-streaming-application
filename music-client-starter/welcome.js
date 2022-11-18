@@ -3,6 +3,7 @@ window.onload = function () {
   document.getElementById("logoutBtn").onclick = logout;
   fetchAllSongs();
   fetchPlaylist();
+  document.getElementById("search").onkeyup = searchSong;
 };
 
 function init() {
@@ -25,7 +26,12 @@ function fetchAllSongs() {
   })
     .then((response) => response.json())
     .then((songs) => {
-      let html = `
+      populateSongs(songs);
+    });
+}
+
+function populateSongs(songs) {
+  let html = `
       <table>
         <tr>
           <th></th>
@@ -34,9 +40,9 @@ function fetchAllSongs() {
           <th>Action</th>
         </tr>`;
 
-      let count = 0;
-      songs.forEach((row) => {
-        html += `
+  let count = 0;
+  songs.forEach((row) => {
+    html += `
             <tr>
                 <td>${++count}</td>
                 <td>${row.title}</td>
@@ -45,12 +51,10 @@ function fetchAllSongs() {
                 <input id="row_id${count}" value="${row.id}" type="hidden"/>
             </tr>
             `;
-      });
+  });
 
-      html += `</table>`;
-      document.getElementById("music-lib").innerHTML = html;
-      console.log(songs);
-    });
+  html += `</table>`;
+  document.getElementById("music-lib").innerHTML = html;
 }
 
 //ADDING FROM SONGLIST TO PLAYLIST
@@ -141,4 +145,15 @@ function playSong(count) {
   document.getElementById("name").innerText = document.getElementById(
     `track_name${count}`
   ).value;
+}
+
+async function searchSong(event) {
+  const res = await fetch(
+    "http://localhost:3000/api/music?search=" + event.target.value,
+    {
+      headers: { Authorization: `Bearer ${sessionStorage.getItem("token")}` },
+    }
+  );
+  const result = await res.json();
+  populateSongs(result);
 }

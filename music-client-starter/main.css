@@ -184,3 +184,25 @@ body{
     border-radius: 10px;
 
   }
+
+  /* footer */
+  #controls {
+    width: 80px;
+    float: left;
+  }
+  
+  #progress {
+    margin-left: 80px;
+    border: 1px solid black;
+  }
+  
+  #bar {
+    height: 20px;
+    background-color: green;
+    width: 0;
+  }
+
+  #btn{
+    border: #efefef;
+  }
+ 

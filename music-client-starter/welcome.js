@@ -30,6 +30,7 @@ function fetchAllSongs() {
     });
 }
 
+//POPULATE THE SONGS TABLE WITH SONGS
 function populateSongs(songs) {
   let html = `
       <table>
@@ -147,6 +148,7 @@ function playSong(count) {
   ).value;
 }
 
+//SEARCH SONGS BASED ON INPUT
 async function searchSong(event) {
   const res = await fetch(
     "http://localhost:3000/api/music?search=" + event.target.value,

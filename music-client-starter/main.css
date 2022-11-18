@@ -1,3 +1,10 @@
 #errorMsg {
     color: red;
 }
+
+.footer{
+    background-color: rgb(210, 96, 20);
+    bottom: 0;
+    position: fixed;
+    width: 100%;
+}

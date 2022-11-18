@@ -26,8 +26,4 @@ async function login() {
     document.getElementById("errorMsg").innerText =
       "Incorrect username and password";
   }
-  
 }
-
-
-

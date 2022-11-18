@@ -16,6 +16,7 @@ function logout() {
   location.href = "login.html";
 }
 
+//FETCHING SONGS FROM API
 function fetchAllSongs() {
   fetch("http://localhost:3000/api/music", {
     headers: {
@@ -51,26 +52,52 @@ function fetchAllSongs() {
       console.log(songs);
     });
 }
+
+//ADDING FROM SONGLIST TO PLAYLIST
 async function addToPlaylist(count) {
   const songId = document.getElementById(`row_id${count}`).value;
-  const userId = sessionStorage.getItem("userId");
+
   const res = await fetch("http://localhost:3000/api/playlist/add", {
     method: "POST",
     body: JSON.stringify({
-      userId,
       songId,
     }),
     headers: {
+      Authorization: `Bearer ${sessionStorage.getItem("token")}`,
       "Content-type": "application/json",
     },
   });
   if (res.ok) {
-    console.log(res);
+    const playlist = await res.json();
+    addSongFunction(playlist);
   } else {
-    alert("Error");
+    alert("You have an Error");
   }
 }
 
+//REMOVING SONG FROM PLAYLIST
+async function removeSong(count) {
+  const songId = document.getElementById(`track_id${count}`).value;
+
+  const res = await fetch("http://localhost:3000/api/playlist/remove", {
+    method: "POST",
+    body: JSON.stringify({
+      songId,
+    }),
+    headers: {
+      Authorization: `Bearer ${sessionStorage.getItem("token")}`,
+      "Content-type": "application/json",
+    },
+  });
+  if (res.ok) {
+    const playlist = await res.json();
+    addSongFunction(playlist);
+  } else {
+    alert("You have an Error");
+  }
+}
+
+//FETCHING THE PLAYLIST AND DISPLAYING TO USER INTERFACE
 async function fetchPlaylist() {
   const resp = await fetch("http://localhost:3000/api/playlist", {
     headers: {
@@ -78,36 +105,35 @@ async function fetchPlaylist() {
     },
   });
   const play = await resp.json();
+  addSongFunction(play);
+}
+
+//GENERIC FUNCTION TO POPULATE THE PLAYLIST
+function addSongFunction(param) {
   let playlist = `
-    <table>
         <tr>
-          <th></th>
+          <th>Order Id</th>
           <th>Title</th>
-          <th>User ID</th>
           <th>Action</th>
         </tr>
     `;
-  let count = 0;
-  play.forEach((song) => {
+  param.forEach((song) => {
     playlist += `
             <tr>
-                <td>${++count}</td>
+                <td>${song.orderId}</td>
                 <td>${song.title}</td>
-                <td>${song.userId}</td>
-                <td><button onclick="playSong(${count});">play</button>
-                <button onclick="removeSong(${
-                  song.songId
-                });">remove</button></td>
+                <td><button onclick="playSong(${song.orderId});">play</button>
+                <button onclick="removeSong(${song.orderId});">remove</button></td>
             </tr>
-            <input id="url${count}" value="${song.urlPath}" type="hidden"/>
-            <input id="track_name${count}" value="${song.title}" type="hidden"/>
+            <input id="url${song.orderId}" value="${song.urlPath}" type="hidden"/>
+            <input id="track_name${song.orderId}" value="${song.title}" type="hidden"/>
+            <input id="track_id${song.orderId}" value="${song.songId}" type="hidden"/>
         `;
   });
-  playlist += `</table>`;
   document.getElementById("playlist").innerHTML = playlist;
-  console.log(play);
 }
 
+//FUNCTION THAT PLAYS THE SONG ON THE MUSIC PLAYER WHEN PLAY BUTTON IS CLICKED
 function playSong(count) {
   document.getElementById("player").src =
     `http://127.0.0.1:5500/music-server/src/` +
@@ -116,35 +142,3 @@ function playSong(count) {
     `track_name${count}`
   ).value;
 }
-// function fetchAllSongs() {
-//   fetch("http://localhost:3000/api/music", {
-//     headers: {
-//       Authorization: `Bearer ${sessionStorage.getItem("token")}`,
-//     },
-//   })
-//     .then((response) => response.json())
-//     .then((songs) => console.log(songs));
-
-//   let html = `
-//     <tr>
-//     <th>ID</th>
-//     <th>TITLE</th>
-//     <th>RELEASE DATE</th>
-//     <th>ACTION</th>
-
-//     </tr>
-//     `;
-
-//   response.forEach((element) => {
-//     html += `
-//         <tr>
-//         <td>${element.id}</td>
-//         <td>${element.title}</td>
-//         <td>${element.releaseDate}</td>
-//         <td><button>+</button></td>
-
-//         </tr>
-//         `;
-//   });
-//   // document.getElementById('')
-// }

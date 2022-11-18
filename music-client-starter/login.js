@@ -21,15 +21,9 @@ async function login() {
     const result = await response.json();
     sessionStorage.setItem("token", result.accessToken);
     sessionStorage.setItem("username", result.username);
-    //added code...
-    sessionStorage.setItem("userId", result.id);
     location.href = "welcome.html";
   } else {
     document.getElementById("errorMsg").innerText =
       "Incorrect username and password";
   }
-  
 }
-
-
-

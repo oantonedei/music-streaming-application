@@ -15,14 +15,14 @@
     color: red;
 }
 
-<<<<<<< HEAD
+
 .footer{
     background-color: rgb(210, 96, 20);
     bottom: 0;
     position: fixed;
     width: 100%;
 }
-=======
+
 .headCont{
     display: flex;
     background-color: rgb(212, 222, 222);
@@ -192,4 +192,3 @@ body{
     border-radius: 10px;
 
   }
->>>>>>> 4330b20ebec394f400e651cb6ae26eb65bb90969

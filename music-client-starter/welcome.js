@@ -142,7 +142,7 @@ function addSongFunction(param) {
 //FUNCTION THAT PLAYS THE SONG ON THE MUSIC PLAYER WHEN PLAY BUTTON IS CLICKED
 function playSong(count) {
   document.getElementById("player").src =
-    `http://127.0.0.1:5500/music-server/src/` +
+    `http://127.0.0.1:5500/finalProject/map_project/music-server/src/` +
     document.getElementById(`url${count}`).value;
   document.getElementById("name").innerText = document.getElementById(
     `track_name${count}`
@@ -165,7 +165,7 @@ function buttonIcon() {
   let shuffle = document.getElementById("shuffle");
   let repeat = document.getElementById("repeat");
   let repeatAll = document.getElementById("repeatAll");
-  console.log(shuffle);
+  console.log(repeatAll.style.display);
   if (shuffle.style.display === "block") {
     repeat.style.display = "block";
     repeatAll.style.display = "none";

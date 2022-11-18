@@ -65,7 +65,7 @@
                             <path
                                 d="M13 5.466V1.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384l-2.36 1.966a.25.25 0 0 1-.41-.192zm0 9v-3.932a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384l-2.36 1.966a.25.25 0 0 1-.41-.192z" />
                         </svg></i>
-                    <i id="repeatAll" class="repeatAll"><svg xmlns="http://www.w3.org/2000/svg" width="26" height="26"
+                    <i style="display: block" id="repeatAll" class="repeatAll"><svg xmlns="http://www.w3.org/2000/svg" width="26" height="26"
                             fill="currentColor" class="bi bi-repeat" viewBox="0 0 16 16">
                             <path
                                 d="M11 5.466V4H5a4 4 0 0 0-3.584 5.777.5.5 0 1 1-.896.446A5 5 0 0 1 5 3h6V1.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384l-2.36 1.966a.25.25 0 0 1-.41-.192Zm3.81.086a.5.5 0 0 1 .67.225A5 5 0 0 1 11 13H5v1.466a.25.25 0 0 1-.41.192l-2.36-1.966a.25.25 0 0 1 0-.384l2.36-1.966a.25.25 0 0 1 .41.192V12h6a4 4 0 0 0 3.585-5.777.5.5 0 0 1 .225-.67Z" />
@@ -74,19 +74,17 @@
                 </button>
             </div>
             <div>
-                <i class="bi bi-rewind-circle" id="back"></i>
-                <audio id="my-audio" controls>
-                    <source src="http://jPlayer.org/audio/mp3/Miaow-07-Bubble.mp3" type="audio/mpeg" />
+                <!-- <i class="bi bi-rewind-circle" id="back"></i> -->
+                <p id="name"></p>
+                <audio id="player" src="" controls autoplay="true">
+                    <!-- <source src="http://jPlayer.org/audio/mp3/Miaow-07-Bubble.mp3" type="audio/mpeg" />
                     <source src="http://jPlayer.org/audio/ogg/Miaow-07-Bubble.ogg" type="audio/ogg" />
-
-                    <a href="audiofile.mp3">audiofile.mp3</a>
+                    <a href="audiofile.mp3">audiofile.mp3</a> -->
                 </audio>
-                <i class="bi bi-fast-forward-circle" id="forward"></i>
+                <!-- <i class="bi bi-fast-forward-circle" id="forward"></i> -->
             </div>
 
         </div>
-      <p id="name"></p>
-      <audio id="player" src="" autoplay="true" controls></audio>
     </footer>
   </body>
 </html>

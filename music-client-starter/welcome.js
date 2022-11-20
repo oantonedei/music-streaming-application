@@ -5,29 +5,7 @@ window.onload = function () {
   fetchPlaylist();
   document.getElementById("search").onkeyup = searchSong;
   document.getElementById("btn").onclick = buttonIcon;
-  document.getElementById("player").addEventListener("ended", function (event) {
-    //console.log("I am alive");
-    let playType = sessionStorage.getItem("playType");
-    let playerArr = JSON.parse(sessionStorage.getItem("playerArr"));
-    let orderId = sessionStorage.getItem("orderId");
-    console.log(playerArr.length);
-    if (playType === "ORDER") {
-      orderId++;
-      if (orderId > playerArr.length) {
-        orderId = 1;
-      }
-      //currentSong = playerArr.filter((ob) => ob.orderId === orderId);
-      //console.log(playerArr[orderId - 1]);
-      sessionStorage.setItem("orderId", orderId);
-      document.getElementById("player").src =
-        `http://127.0.0.1:5500/music-server/src/` +
-        document.getElementById(`url${orderId}`).value;
-      document.getElementById("name").innerText = document.getElementById(
-        `track_name${orderId}`
-      ).value;
-    } else if (playType === "SHUFFLE") {
-    }
-  });
+  document.getElementById("player").addEventListener("ended", alterPlaylist);
 };
 
 function init() {
@@ -218,7 +196,6 @@ function buttonIcon() {
   let shuffle = document.getElementById("shuffle");
   let repeat = document.getElementById("repeat");
   let repeatAll = document.getElementById("repeatAll");
-  console.log(repeatAll.style.display);
   if (shuffle.style.display === "block") {
     repeat.style.display = "block";
     repeatAll.style.display = "none";
@@ -237,5 +214,52 @@ function buttonIcon() {
     repeatAll.style.display = "none";
     document.getElementById("player").removeAttribute("loop");
     sessionStorage.setItem("playType", "SHUFFLE");
+    alterPlaylist();
+  }
+}
+
+function alterPlaylist() {
+  let playType = sessionStorage.getItem("playType");
+  let playerArr = JSON.parse(sessionStorage.getItem("playerArr"));
+  let orderId = sessionStorage.getItem("orderId");
+  if (playType === "ORDER") {
+    orderId++;
+    if (orderId > playerArr.length) {
+      orderId = 1;
+    }
+    sessionStorage.setItem("orderId", orderId);
+    document.getElementById("player").src =
+      `http://127.0.0.1:5500/music-server/src/` +
+      document.getElementById(`url${orderId}`).value;
+    document.getElementById("name").innerText = document.getElementById(
+      `track_name${orderId}`
+    ).value;
+  } else if (playType === "SHUFFLE") {
+    orderId = Math.floor(Math.random() * (playerArr.length - 1) + 1);
+    sessionStorage.setItem("orderId", orderId);
+    document.getElementById("player").src =
+      `http://127.0.0.1:5500/music-server/src/` +
+      document.getElementById(`url${orderId}`).value;
+    document.getElementById("name").innerText = document.getElementById(
+      `track_name${orderId}`
+    ).value;
+  }
+}
+function prev() {
+  let playType = sessionStorage.getItem("playType");
+  let playerArr = JSON.parse(sessionStorage.getItem("playerArr"));
+  let orderId = sessionStorage.getItem("orderId");
+  if (playType === "ORDER") {
+    orderId--;
+    if (orderId < 1) {
+      orderId = playerArr.length;
+    }
+    sessionStorage.setItem("orderId", orderId);
+    document.getElementById("player").src =
+      `http://127.0.0.1:5500/music-server/src/` +
+      document.getElementById(`url${orderId}`).value;
+    document.getElementById("name").innerText = document.getElementById(
+      `track_name${orderId}`
+    ).value;
   }
 }

@@ -97,15 +97,17 @@
             ></i>
           </button>
         </div>
-        <div>
-          <!-- <i class="bi bi-rewind-circle" id="back"></i> -->
-          <p id="name"></p>
-          <audio id="player" src="" controls autoplay="true">
-            <!-- <source src="http://jPlayer.org/audio/mp3/Miaow-07-Bubble.mp3" type="audio/mpeg" />
-                    <source src="http://jPlayer.org/audio/ogg/Miaow-07-Bubble.ogg" type="audio/ogg" />
-                    <a href="audiofile.mp3">audiofile.mp3</a> -->
-          </audio>
-          <!-- <i class="bi bi-fast-forward-circle" id="forward"></i> -->
+        <div style="display: block">
+          <div style="float: left">
+            <button onclick="prev();">Prev</button>
+          </div>
+          <div style="float: right">
+            <button onclick="alterPlaylist();">Next</button>
+          </div>
+          <div style="float: center">
+            <p id="name"></p>
+            <audio id="player" src="" controls autoplay="true"></audio>
+          </div>
         </div>
       </div>
     </footer>

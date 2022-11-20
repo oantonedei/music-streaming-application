@@ -5,6 +5,29 @@ window.onload = function () {
   fetchPlaylist();
   document.getElementById("search").onkeyup = searchSong;
   document.getElementById("btn").onclick = buttonIcon;
+  document.getElementById("player").addEventListener("ended", function (event) {
+    //console.log("I am alive");
+    let playType = sessionStorage.getItem("playType");
+    let playerArr = JSON.parse(sessionStorage.getItem("playerArr"));
+    let orderId = sessionStorage.getItem("orderId");
+    console.log(playerArr.length);
+    if (playType === "ORDER") {
+      orderId++;
+      if (orderId > playerArr.length) {
+        orderId = 1;
+      }
+      //currentSong = playerArr.filter((ob) => ob.orderId === orderId);
+      //console.log(playerArr[orderId - 1]);
+      sessionStorage.setItem("orderId", orderId);
+      document.getElementById("player").src =
+        `http://127.0.0.1:5500/music-server/src/` +
+        document.getElementById(`url${orderId}`).value;
+      document.getElementById("name").innerText = document.getElementById(
+        `track_name${orderId}`
+      ).value;
+    } else if (playType === "SHUFFLE") {
+    }
+  });
 };
 
 function init() {
@@ -15,6 +38,9 @@ function init() {
 function logout() {
   sessionStorage.removeItem("username");
   sessionStorage.removeItem("token");
+  sessionStorage.removeItem("userId");
+  sessionStorage.removeItem("playerArr");
+  sessionStorage.removeItem("orderId");
   location.href = "login.html";
 }
 
@@ -75,6 +101,9 @@ async function addToPlaylist(count) {
   });
   if (res.ok) {
     const playlist = await res.json();
+    let playerArr = [];
+    playlist.forEach((ob) => playerArr.push(ob));
+    sessionStorage.setItem("playerArr", JSON.stringify(playerArr));
     addSongFunction(playlist);
   } else {
     alert("You have an Error");
@@ -97,6 +126,9 @@ async function removeSong(count) {
   });
   if (res.ok) {
     const playlist = await res.json();
+    let playerArr = [];
+    playlist.forEach((ob) => playerArr.push(ob));
+    sessionStorage.setItem("playerArr", JSON.stringify(playerArr));
     addSongFunction(playlist);
   } else {
     alert("You have an Error");
@@ -111,6 +143,12 @@ async function fetchPlaylist() {
     },
   });
   const play = await resp.json();
+  let playerArr = [];
+  play.forEach((ob) => playerArr.push(ob));
+  sessionStorage.setItem("playerArr", JSON.stringify(playerArr));
+
+  console.log(playerArr);
+
   addSongFunction(play);
 }
 
@@ -140,14 +178,29 @@ function addSongFunction(param) {
 }
 
 //FUNCTION THAT PLAYS THE SONG ON THE MUSIC PLAYER WHEN PLAY BUTTON IS CLICKED
-function playSong(count) {
+async function playSong(orderId) {
+  let playerArr = JSON.parse(sessionStorage.getItem("playerArr"));
+  sessionStorage.setItem("orderId", orderId);
+  currentSong = playerArr.filter((ob) => ob.orderId === orderId);
   document.getElementById("player").src =
-    `http://127.0.0.1:5500/finalProject/map_project/music-server/src/` +
-    document.getElementById(`url${count}`).value;
+    `http://127.0.0.1:5500/music-server/src/` +
+    document.getElementById(`url${currentSong[0].orderId}`).value;
   document.getElementById("name").innerText = document.getElementById(
-    `track_name${count}`
+    `track_name${currentSong[0].orderId}`
   ).value;
 }
+
+// function next() {
+//   // Check for last audio file in the playlist
+//   if (i === files.length - 1) {
+//     i = 0;
+//   } else {
+//     i++;
+//   }
+
+//   // Change the audio element source
+//   music_player.src = files[i];
+// }
 
 //SEARCH SONGS BASED ON INPUT
 async function searchSong(event) {
@@ -170,13 +223,19 @@ function buttonIcon() {
     repeat.style.display = "block";
     repeatAll.style.display = "none";
     shuffle.style.display = "none";
+    document.getElementById("player").setAttribute("loop", "loop");
+    sessionStorage.setItem("playType", "REPEAT");
   } else if (repeat.style.display === "block") {
     shuffle.style.display = "none";
     repeatAll.style.display = "block";
     repeat.style.display = "none";
+    document.getElementById("player").removeAttribute("loop");
+    sessionStorage.setItem("playType", "ORDER");
   } else if (repeatAll.style.display === "block") {
     shuffle.style.display = "block";
     repeat.style.display = "none";
     repeatAll.style.display = "none";
+    document.getElementById("player").removeAttribute("loop");
+    sessionStorage.setItem("playType", "SHUFFLE");
   }
 }

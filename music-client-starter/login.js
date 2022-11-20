@@ -21,6 +21,7 @@ async function login() {
     const result = await response.json();
     sessionStorage.setItem("token", result.accessToken);
     sessionStorage.setItem("username", result.username);
+    sessionStorage.setItem("playType", result.playType);
     location.href = "welcome.html";
   } else {
     document.getElementById("errorMsg").innerText =

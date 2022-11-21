@@ -23,8 +23,9 @@
         <div class="logo">
           <img src="./logo.jpg" alt="" />
         </div>
-        <input id="search" type="text" />
+        <!-- <input id="search" type="text" /> -->
         <div class="rightSide">
+          <div>search: <input id="search" type="text" /></div>
           <div>
             Welcome, <span id="username"></span>
             <button id="logoutBtn">Logout</button>
@@ -33,13 +34,13 @@
       </div>
     </header>
 
-    <section>
+    <section class="songs">
       <div id="music-lib"></div>
       <br />
       <br />
       <br />
       <div>
-        <table id="playlist"></table>
+        <table class="styled-table" id="playlist"></table>
       </div>
     </section>
 
@@ -97,17 +98,48 @@
             ></i>
           </button>
         </div>
-        <div style="display: block">
-          <div style="float: left">
-            <button onclick="prev();">Prev</button>
-          </div>
-          <div style="float: right">
-            <button onclick="alterPlaylist();">Next</button>
-          </div>
-          <div style="float: center">
-            <p id="name"></p>
-            <audio id="player" src="" controls autoplay="true"></audio>
-          </div>
+        <div style="display: flex; gap: 20px; justify-content: center">
+          <!-- previous track -->
+          <button style="padding: 1%" id="back" onclick="prev()">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="26"
+              height="26"
+              fill="currentColor"
+              class="bi bi-skip-start-circle"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
+              />
+              <path
+                d="M10.229 5.055a.5.5 0 0 0-.52.038L7 7.028V5.5a.5.5 0 0 0-1 0v5a.5.5 0 0 0 1 0V8.972l2.71 1.935a.5.5 0 0 0 .79-.407v-5a.5.5 0 0 0-.271-.445z"
+              />
+            </svg>
+          </button>
+
+          <!-- next track -->
+
+          <button style="padding: 1%" id="next" onclick="alterPlaylist()">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="26"
+              height="26"
+              fill="currentColor"
+              class="bi bi-skip-end-circle"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
+              />
+              <path
+                d="M6.271 5.055a.5.5 0 0 1 .52.038L9.5 7.028V5.5a.5.5 0 0 1 1 0v5a.5.5 0 0 1-1 0V8.972l-2.71 1.935A.5.5 0 0 1 6 10.5v-5a.5.5 0 0 1 .271-.445z"
+              />
+            </svg>
+          </button>
+
+          <p id="name"></p>
+          <audio id="player" src="" controls autoplay="true"></audio>
         </div>
       </div>
     </footer>

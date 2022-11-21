@@ -38,7 +38,7 @@ function fetchAllSongs() {
 //POPULATE THE SONGS TABLE WITH SONGS
 function populateSongs(songs) {
   let html = `
-      <table>
+      <table class="styled-table">
         <tr>
           <th></th>
           <th>Title</th>
